@@ -1,8 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import "./index.css";
-import App from "./App";
-import * as serviceWorker from "./serviceWorker";
-import "bootstrap/dist/css/bootstrap.css";
-
-ReactDOM.render(<App />, document.getElementById("root"));
+var mySql = require("mysql");
+var connection = mySql.createConnection({
+  host: "",
+  user: "",
+  password: "",
+  database: ""
+});
+connection.connect();
+var express = require("express");
+const app = express();
+app.get("/", (req, res) => {
+  res.send("Hello World");
+});
