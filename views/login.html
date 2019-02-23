@@ -11,43 +11,60 @@
 
   <!-- no additional media querie or css is required -->
 
+  <style>
+    h1 {
+      color: gold;
+      padding-top: 50px;
+      font-family: "Times New Roman", Times, serif;
+      font-style: oblique;
+      font-size: 5em;
+    }
+
+    h1,
+    body p {
+      margin: 0;
+    }
+  </style>
+
   <h1 align="center">WELCOME TO CARPOOLY</h1>
 
-  <div class="container">
-    <div
-      class="row justify-content-center align-items-center"
-      style="height:100vh"
-    >
-      <div class="col-4">
-        <div class="card">
-          <div class="card-body">
-            <form action="" autocomplete="off">
-              <div class="form-group">
-                <input
-                  type="text"
-                  placeholder="Username"
-                  class="form-control"
-                  name="username"
-                />
-              </div>
-              <div class="form-group">
-                <input
-                  type="password"
-                  placeholder="Password"
-                  class="form-control"
-                  name="password"
-                />
-              </div>
-              <button type="button" id="sendlogin" class="btn btn-primary">
-                Login
-              </button>
-              <button type="button" id="sendlogin" class="btn btn-primary">
-                Sign up
-              </button>
-            </form>
+  <body>
+    <div class="container">
+      <div
+        class="row justify-content-center align-items-center"
+        style="height:80vh"
+      >
+        <div class="col-4">
+          <div class="card">
+            <div class="card-body">
+              <form action="" autocomplete="off">
+                <div class="form-group">
+                  <input
+                    type="text"
+                    placeholder="Username"
+                    class="form-control"
+                    name="username"
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    placeholder="Password"
+                    class="form-control"
+                    name="password"
+                  />
+                </div>
+                <button type="button" id="sendlogin" class="btn btn-primary">
+                  Login
+                </button>
+                <div class="sign-up">
+                  <a href="sign-up.html">Sign Up</a>
+                </div>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
+  </body>
 </html>
