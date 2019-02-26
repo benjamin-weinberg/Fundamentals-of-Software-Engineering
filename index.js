@@ -1,7 +1,19 @@
 var express = require('express');
 var path = require('path')
-var app = express()
+var app = express();
 
+var mySql = require('mysql');
+
+var connection = mySql.createConnection({
+  host: '104.198.21.61',
+  user: 'serviceAccount',
+  password: 'password'
+});
+
+connection.connect(function(err) {
+  if (err) throw err;
+  console.log("Connected!");
+});
 
 app.use(express.static('public'));
 
