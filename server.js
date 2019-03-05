@@ -5,6 +5,27 @@ var md5 = require('md5');
 var hbs = require('express-handlebars');
 
 
+var mySql = require('mysql');
+try{
+var connection = mySql.createConnection({
+  host: '104.198.21.61',
+  user: 'serviceAccount',
+  password: 'password'
+});
+}
+catch(error){
+console.log(error);
+}
+
+try{
+    connection.connect();
+}
+catch(error){
+    console.log(error);
+}
+finally{
+    console.log('connected');
+}
 app.engine( 'hbs', hbs( {
     extname: 'hbs',
     defaultView: 'default',
