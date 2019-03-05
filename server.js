@@ -1,26 +1,34 @@
 var express = require('express');
-var path = require('path')
-var app = express()
+var path = require('path');
+var app = express();
+var md5 = require('md5');
+var hbs = require('express-handlebars');
 
 
+app.engine( 'hbs', hbs( {
+    extname: 'hbs',
+    defaultView: 'default',
+    layoutsDir: __dirname + '/views/layouts/',
+    partialsDir: __dirname + '/views/partials/'
+}));
+
+app.set('view engine', 'hbs');           // Use Handlebars view engine
 app.use(express.static('public'));
 
-app.get('/home', (req, res) => {
-    res.sendFile(path.join(__dirname + '/public/home.html'));
-})
+app.get('/home', function(req, res, next) {
+    res.render('home', {layout: 'default', template: 'home-template'});
+});
 
-app.get('/signup', (req, res) => {
-    res.sendFile(path.join(__dirname + '/public/signup.html'));
-})
+app.get('/login', function(req, res, next) {
+    res.render('login', {layout: 'default', template: 'login-template'});
+});
 
-app.get('/login', (req, res) => {
-    res.sendFile(path.join(__dirname + '/public/login.html'));
-})
+app.get('/signup', function(req, res, next) {
+    res.render('signup', {layout: 'default', template: 'signup-template'});
+});
 
 app.get('/', (req, res) => {
     res.redirect('/home');
 })
-
-
 
 app.listen(3000);
