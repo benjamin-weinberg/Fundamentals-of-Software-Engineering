@@ -26,6 +26,23 @@ catch(error){
 finally{
     console.log('connected');
 }
+try{
+connection.connect(function(err){
+    try{
+        connection.query("INSERT INTO vanPool.UserList VALUES ('Jim Bean', 'this@this.edu','user','password',1)")
+    }
+    catch(err){
+        console.log(err)
+    }
+       
+    });
+}
+catch(err){
+    console.log(err);
+}
+
+
+
 app.engine( 'hbs', hbs( {
     extname: 'hbs',
     defaultView: 'default',
