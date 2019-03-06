@@ -3,9 +3,9 @@ var path = require('path');
 var app = express();
 var md5 = require('md5');
 var hbs = require('express-handlebars');
+
+
 var mySql = require('mysql');
-
-
 try{
 var connection = mySql.createConnection({
   host: '104.198.21.61',
@@ -24,25 +24,8 @@ catch(error){
     console.log(error);
 }
 finally{
-    console.log('connected to database');
+    console.log('connected');
 }
-try{
-connection.connect(function(err){
-    try{
-        connection.query("INSERT INTO vanPool.UserList VALUES ('Jim Bean', 'this@this.edu','user','password',1)")
-    }
-    catch(err){
-        console.log(err)
-    }
-       
-    });
-}
-catch(err){
-    console.log(err);
-}
-
-
-
 app.engine( 'hbs', hbs( {
     extname: 'hbs',
     defaultView: 'default',
