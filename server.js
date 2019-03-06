@@ -26,6 +26,7 @@ catch(error){
 finally{
     console.log('connected');
 }
+
 app.engine( 'hbs', hbs( {
     extname: 'hbs',
     defaultView: 'default',
