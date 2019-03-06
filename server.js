@@ -3,9 +3,9 @@ var path = require('path');
 var app = express();
 var md5 = require('md5');
 var hbs = require('express-handlebars');
-
-
 var mySql = require('mysql');
+
+
 try{
 var connection = mySql.createConnection({
   host: '104.198.21.61',
@@ -24,7 +24,7 @@ catch(error){
     console.log(error);
 }
 finally{
-    console.log('connected');
+    console.log('connected to database');
 }
 try{
 connection.connect(function(err){
