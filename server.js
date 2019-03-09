@@ -9,8 +9,8 @@ var mySql = require('mysql');
 try{
 var connection = mySql.createConnection({
   host: '104.198.21.61',
-  user: 'serviceAccount',
-  password: 'password'
+  user: 'root',
+  password: 'Team8-SoftwareFund'
 });
 }
 catch(error){
@@ -25,6 +25,17 @@ catch(error){
 }
 finally{
     console.log('connected');
+}
+try{
+    connection.query('Select * from vanPool.UserList', function(err,restults,fields){
+        console.log(restults);
+    });
+}
+catch(error){
+    console.log(error);
+}
+finally{
+    //console.log(restult);
 }
 
 app.engine( 'hbs', hbs( {
