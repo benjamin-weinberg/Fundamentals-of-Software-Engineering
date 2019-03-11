@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <link
+    href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+    rel="stylesheet"
+    id="bootstrap-css"
+  />
+  <link href="./css/main.css" rel="stylesheet" />
+  <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <head>
+    <nav
+      class="navbar navbar-expand-lg navbar-dark bg-dark"
+      style="position: absoloute; top: 10px;"
+    >
+      <a class="navbar-brand" href="#">BNR Ride Share</a>
+
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Rider</a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link"
+              href="/account"
+              style="position: absolute; right: 10px; top: 8px;"
+              >Account</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </head>
+
+  <body>
+    <div style="width:800px; margin:0 auto;">
+      centered content
+
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-md-8">
+            <div class="card">
+              <div class="card-header">Pick-up and Drop-off</div>
+              <div class="card-body">
+                <form class="form-horizontal" method="post" action="#">
+                  <div class="form-group">
+                    <label for="pick-up" class="cols-sm-2 control-label"
+                      >Enter Pick-up Location:</label
+                    >
+                    <div class="cols-sm-10">
+                      <div class="input-group">
+                        <span class="input-group-addon"
+                          ><i class="fa fa-user fa" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="pick-up"
+                          id="pick-up"
+                          placeholder="Pick-up location"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label for="destination" class="cols-sm-2 control-label"
+                      >Enter Destination:</label
+                    >
+                    <div class="cols-sm-10">
+                      <div class="input-group">
+                        <span class="input-group-addon"
+                          ><i class="fa fa-user fa" aria-hidden="true"></i
+                        ></span>
+                        <input
+                          type="text"
+                          class="form-control"
+                          name="destination"
+                          id="destination"
+                          placeholder="Desination"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
