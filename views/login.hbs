@@ -19,33 +19,57 @@
       <div class="col-4">
         <div class="card">
           <div class="card-body">
-            <form action="" autocomplete="off">
+            <form class="needs-validation" novalidate action="" autocomplete="off">
               <div class="form-group">
                 <input
                   type="text"
                   placeholder="Username"
                   class="form-control"
                   id="username"
+                  required
                 />
               </div>
+              
               <div class="form-group">
                 <input
                   type="password"
                   placeholder="Password"
                   class="form-control"
                   id="password"
+                  required
                 />
               </div>
-              <button onclick="loginClick()" type="button" id="sendlogin" class="btn btn-primary">
+              <button onclick="loginClick()" type="button" id="sendlogin" class="btn btn-dark">
                 Login
               </button>
               <div class="signup">
                 <a href="signup">Not a memeber? Sign up here!</a>
               </div>
             </form>
+            
           </div>
         </div>        
       </div>
     </div>
   </div>
+  <script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function() {
+  'use strict';
+  window.addEventListener('load', function() {
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.getElementsByClassName('needs-validation');
+    // Loop over them and prevent submission
+    var validation = Array.prototype.filter.call(forms, function(form) {
+      form.addEventListener('submit', function(event) {
+        if (form.checkValidity() === false) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  }, false);
+})();
+</script>
 </body>
