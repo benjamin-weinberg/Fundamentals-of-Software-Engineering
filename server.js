@@ -136,7 +136,7 @@
         });
 
     // ***** Test Protected Page *****
-        app.get('/protected_page', checkSignIn, function(req, res){
+        app.get('/protected_page', checkSignIn, function(err, req, res, next){
             res.render('protected_page', {username: req.session.user.username})
         });
 
