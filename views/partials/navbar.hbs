@@ -17,9 +17,17 @@
         <li class="nav-item">
             <a class="nav-link" href="#">Pricing</a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/login" style="position: absolute; right: 10px">Log in/Sign Up</a>
-        </li>
+
+        {{#if username}}
+            <li class="nav-item">
+                <a class="nav-link" href="/logout" style="position: absolute; right: 10px">Hello {{username}}</a>
+            </li>
+        {{else}}
+            <li class="nav-item">
+                <a class="nav-link" href="/login" style="position: absolute; right: 10px">Log in/Sign Up</a>
+            </li>
+        {{/if}}
+        
         </ul>
     </div>
 </nav>

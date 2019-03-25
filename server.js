@@ -41,7 +41,8 @@
 
     // ***** Home *****
         app.get('/home', function(req, res, next) {
-            res.render('home', {layout: 'default', template: 'home-template'});
+            if (req.session.user) res.render('home', {layout: 'default', template: 'home-template', username: req.session.user.username});
+            else res.render('home', {layout: 'default', template: 'home-template'});
         });
 
     // ***** Login *****
@@ -50,13 +51,8 @@
         });
 
         app.post('/login', function(req, res){
-            console.log("username: " + req.body.username)
-            console.log("pass: " + req.body.password)
             var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "';";
             connection.query(sql, function (err, results) {
-                console.log("Results: ");
-                console.log(results)
-                console.log(results[0])
                 if (err) console.log(err.stack);
                 if (results[0] == undefined){
                     res.redirect('login');
@@ -76,48 +72,41 @@
         });
 
         app.post('/signup', function(req, res){
-            console.log("username: " + req.body.username)
-            console.log("pass: " + req.body.password)
             if(!req.body.username || !req.body.password){
                 res.status("400");
                 res.send("Invalid details!");
             } 
             else {
+                var newUser;
                 var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username+"';";
                 connection.query(sql, function (err, results) {
                     if (err) console.log(err.stack);
                     if (results[0] != undefined){
                         res.redirect('signup');
                     }
+                    else{  
+                        newUser = {name: req.body.name, email: req.body.email, username: req.body.username, password: req.body.password, accountType: 1};
+                        sql = "INSERT INTO vanPool.UserList (name, email, username, password, accountType) VALUES ('" + newUser.name + "', '" +  newUser.email + "', '" + newUser.username +"', '" + newUser.password + "', '" + newUser.accountType +"');";
+                        connection.query(sql, function (err, results) {
+                            if (err) console.log(err.stack);
+                            req.session.user = newUser;
+                            res.redirect('/home');
+                        });
+                    }
                 });   
-                var newUser = {name: req.body.name, email: req.body.email, username: req.body.username, password: req.body.password, accountType: 1};
-                sql = "INSERT INTO vanPool.UserList (name, email, username, password, accountType) VALUES ('" + newUser.name + "', '" +  newUser.email + "', '" + newUser.username +"', '" + newUser.password + "', '" + newUser.accountType +"');";
-                connection.query(sql, function (err, results) {
-                    if (err) console.log(err.stack);
-                    req.session.user = newUser;
-                    res.redirect('/home');
-                });  
             }
-            console.log("New User created: " + newUser)
         });
 
     // ***** Logout *****
         app.get('/logout', function(req, res){
-            req.session.destroy(function(){
-            console.log("user logged out.")
-            });
+            req.session.destroy();
             res.redirect('/login');
         });
 
     // ***** Test Protected Page *****
-        app.get('/protected_page', checkSignIn, function(err, req, res, next){
-            res.render('protected_page', {username: req.session.user.username})
-        });
-
-        app.use('/protected_page', function(err, req, res, next){
-            console.log(err);
-               //User should be authenticated! Redirect him to log in.
-               res.redirect('/login');
+        app.get('/protected_page', function(req, res){
+            if (req.session.user) res.render('protected_page', {layout: 'default', template: 'home-template', username: req.session.user.username});
+            else res.redirect('/login');
         });
 
 
@@ -125,19 +114,6 @@
         app.get('/', (req, res) => {
             res.redirect('/home');
         })
-
-
-// ==================== Helper Functions ========================
-    function checkSignIn(req, res){
-        if(req.session.user){
-            next();     //If session exists, proceed to page
-        } 
-        else {
-            var err = new Error("Not logged in!");
-            console.log(req.session.user);
-            next(err);  //Error, trying to access unauthorized page!
-        }
-    }
 
 // ================== Start Express Server ======================
     app.listen(3000);
