@@ -29,46 +29,13 @@
         partialsDir: __dirname + '/views/partials/'
     }));
 
-
-
-// ================ Temp auth stuff ======================
-    var Users = [];
-
-// ========== Attempt mysql connection stuff =============
-    try{
-        var connection = mySql.createConnection({
+// ================= MySQL Connection =====================
+    var connection = mySql.createConnection({
         host: '104.198.21.61',
         user: 'root',
         password: 'Team8-SoftwareFund'
-    });
-    }
-    catch(error){
-        console.log(error);
-    }
-
-    try{
-        connection.connect();
-    }
-    catch(error){
-        console.log(error);
-    }
-    finally{
-        console.log('connected');
-    }
-    try{
-        connection.query('Select * from vanPool.UserList', function(err,restults,fields){
-            console.log(restults);
-        });
-    }
-    catch(error){
-        console.log(error);
-    }
-    finally{
-        //console.log(restult);
-    }
-
-
-
+    })
+    connection.connect();
 
 // ================ Express Views Setup ==========================
 
@@ -83,18 +50,24 @@
         });
 
         app.post('/login', function(req, res){
-            console.log(Users);
-            if(!req.body.username || !req.body.password){
-            res.render('login', {message: "Please enter both username and password"});
-            } else {
-            Users.filter(function(user){
-                if(user.username === req.body.username && user.password === req.body.password){
-                    req.session.user = user;
-                    res.redirect('/protected_page');
+            console.log("username: " + req.body.username)
+            console.log("pass: " + req.body.password)
+            var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "';";
+            connection.query(sql, function (err, results) {
+                console.log("Results: ");
+                console.log(results)
+                console.log(results[0])
+                if (err) console.log(err.stack);
+                if (results[0] == undefined){
+                    res.redirect('login');
                 }
-            });
-            res.render('login', {message: "Invalid credentials!"});
-            }
+                else{
+                    var user = {name: results[0].name, email: results[0].email, username: results[0].username, password: results[0].password, accountType: results[0].accountType};
+                    req.session.user = user;
+                    res.redirect('/home');
+                }
+            });   
+            
         });
 
     // ***** Signup *****
@@ -103,28 +76,29 @@
         });
 
         app.post('/signup', function(req, res){
-            console.log(req)
+            console.log("username: " + req.body.username)
+            console.log("pass: " + req.body.password)
             if(!req.body.username || !req.body.password){
-            res.status("400");
-            res.send("Invalid details!");
-            } else {
-                // var sql = "SELECT * from "
-                // connection.query(sql, function (err, results) {
-                //     if(err) console.log(err.stack);
-                // }); 
-
-                Users.filter(function(user){
-                if(user.username === req.body.username){
-                    res.render('signup', {
-                        message: "User Already Exists! Login or choose another user id"});
-                }
-            });
-            var newUser = {username: req.body.username, password: req.body.password};
-            Users.push(newUser);
-            req.session.user = newUser;
-            console.log("New User created: " + newUser)
-            res.redirect('/protected_page');
+                res.status("400");
+                res.send("Invalid details!");
+            } 
+            else {
+                var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username+"';";
+                connection.query(sql, function (err, results) {
+                    if (err) console.log(err.stack);
+                    if (results[0] != undefined){
+                        res.redirect('signup');
+                    }
+                });   
+                var newUser = {name: req.body.name, email: req.body.email, username: req.body.username, password: req.body.password, accountType: 1};
+                sql = "INSERT INTO vanPool.UserList (name, email, username, password, accountType) VALUES ('" + newUser.name + "', '" +  newUser.email + "', '" + newUser.username +"', '" + newUser.password + "', '" + newUser.accountType +"');";
+                connection.query(sql, function (err, results) {
+                    if (err) console.log(err.stack);
+                    req.session.user = newUser;
+                    res.redirect('/home');
+                });  
             }
+            console.log("New User created: " + newUser)
         });
 
     // ***** Logout *****
