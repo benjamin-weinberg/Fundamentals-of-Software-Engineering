@@ -58,7 +58,7 @@
                     res.redirect('login');
                 }
                 else{
-                    var user = {name: results[0].name, email: results[0].email, username: results[0].username, password: results[0].password, accountType: results[0].accountType};
+                    var user = {name: results[0].name, email: results[0].email, username: results[0].username, password: md5(results[0].password), accountType: results[0].accountType};
                     req.session.user = user;
                     res.redirect('/home');
                 }
