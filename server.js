@@ -51,7 +51,7 @@
         });
 
         app.post('/login', function(req, res){
-            var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username + "' AND password = '" + req.body.password + "';";
+            var sql = "SELECT * FROM vanPool.UserList WHERE username = '" + req.body.username + "' AND password = '" + md5(req.body.password) + "';";
             connection.query(sql, function (err, results) {
                 if (err) console.log(err.stack);
                 if (results[0] == undefined){
@@ -85,7 +85,7 @@
                         res.redirect('signup');
                     }
                     else{  
-                        newUser = {name: req.body.name, email: req.body.email, username: req.body.username, password: req.body.password, accountType: 1};
+                        newUser = {name: req.body.name, email: req.body.email, username: req.body.username, password: md5(req.body.password), accountType: 1};
                         sql = "INSERT INTO vanPool.UserList (name, email, username, password, accountType) VALUES ('" + newUser.name + "', '" +  newUser.email + "', '" + newUser.username +"', '" + newUser.password + "', '" + newUser.accountType +"');";
                         connection.query(sql, function (err, results) {
                             if (err) console.log(err.stack);
