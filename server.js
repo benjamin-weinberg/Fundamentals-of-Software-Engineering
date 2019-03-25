@@ -104,9 +104,8 @@
         });
 
     // ***** Test Protected Page *****
-        app.get('/protected_page', function(req, res){
-            if (req.session.user) res.render('protected_page', {layout: 'default', template: 'home-template', username: req.session.user.username});
-            else res.redirect('/login');
+        app.get('/protected_page', isAuthenticated, function(req, res){
+            res.render('protected_page', {layout: 'default', template: 'home-template', username: req.session.user.username});
         });
 
 
@@ -114,6 +113,10 @@
         app.get('/', (req, res) => {
             res.redirect('/home');
         })
-
+// ==================== helper functions ========================
+    function isAuthenticated(req, res, next) {
+        if (req.session.user) return next();
+        res.redirect('/');
+    }
 // ================== Start Express Server ======================
     app.listen(3000);
