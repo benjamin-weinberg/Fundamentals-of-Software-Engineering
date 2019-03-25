@@ -3,6 +3,7 @@ var path = require('path');
 var app = express();
 var md5 = require('md5');
 var hbs = require('express-handlebars');
+var script = require('./public/script');
 
 
 var mySql = require('mysql');
@@ -63,5 +64,9 @@ app.get('/signup', function(req, res, next) {
 app.get('/', (req, res) => {
     res.redirect('/home');
 })
+
+app.use(express.static(__dirname));
+
+
 
 app.listen(3000);
