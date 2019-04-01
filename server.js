@@ -115,7 +115,17 @@
         })
     // ***** Create Ride ******
         app.get('/createRide', (req, res) =>{
-            res.redirect('/createRide')
+            res.redirect('/createRide');
+        })
+
+        app.post('/createRide',function(req,res){
+            var newRide;
+            newUser = {start: req.body.startLoc, dest: req.body.dest, startTime: req.body.startTime, carId: req.body.carId};
+            sql = "INSERT INTO vanPool.rideList (startLocation, dest, startTime, carID) VALUES ('" + newRide.startLoc + "', '" +  newRide.dest + "', '" + newRide.startTime +"', '" + newRide.carId + "');";
+            connection.query(sql,function(err,results){
+                if(err) console.log(err.stack);
+                res.redirect('/home');
+            })
         })
 // ==================== helper functions ========================
     function isAuthenticated(req, res, next) {
