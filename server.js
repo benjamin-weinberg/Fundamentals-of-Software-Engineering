@@ -113,6 +113,10 @@
         app.get('/', (req, res) => {
             res.redirect('/home');
         })
+    // ***** Create Ride ******
+        app.get('/createRide', (req, res) =>{
+            res.redirect('/createRide')
+        })
 // ==================== helper functions ========================
     function isAuthenticated(req, res, next) {
         if (req.session.user) return next();
