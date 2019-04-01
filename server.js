@@ -108,11 +108,21 @@
             res.render('protected_page', {layout: 'default', template: 'home-template', username: req.session.user.username});
         });
 
+    // ***** Rider Page *****
+        app.get('/rider', isAuthenticated, function(req, res){
+            res.render('rider', {layout: 'default', template: 'home-template', username: req.session.user.username});
+        });
+    
+    // ***** Driver Page *****
+        app.get('/driver', isAuthenticated, function(req, res){
+            res.render('driver', {layout: 'default', template: 'home-template', username: req.session.user.username});
+        });
 
     // ***** Default -> Home *****
         app.get('/', (req, res) => {
             res.redirect('/home');
         })
+
     // ***** Create Ride ******
         app.get('/createRide', (req, res) =>{
             res.redirect('/createRide');
@@ -127,6 +137,8 @@
                 res.redirect('/home');
             })
         })
+
+
 // ==================== helper functions ========================
     function isAuthenticated(req, res, next) {
         if (req.session.user) return next();
