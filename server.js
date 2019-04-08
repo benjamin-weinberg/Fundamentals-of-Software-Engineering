@@ -79,7 +79,13 @@ app.post("/login", function(req, res) {
         accountType: results[0].accountType
       };
       req.session.user = user;
-      res.redirect("/home");
+      if (user.accountType == 2) {
+        res.redirect("/rider");
+      } else if (user.accountType == 3) {
+        res.redirect("/driver");
+      } else {
+        res.redirect("/home");
+      }
     }
   });
 });
@@ -128,7 +134,11 @@ app.post("/signup", function(req, res) {
         connection.query(sql, function(err, results) {
           if (err) console.log(err.stack);
           req.session.user = newUser;
-          res.redirect("/home");
+          if (newUser.accountType == 2) {
+            res.redirect("/rider");
+          } else if (newUser.accountType == 3) {
+            res.redirect("/driver");
+          }
         });
       }
     });
