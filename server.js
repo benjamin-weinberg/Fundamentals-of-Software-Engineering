@@ -54,7 +54,30 @@ connection.connect();
   
   List of all people on a ride:
      Select email from vanPool.UserList inner 
-     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID = InputNumber;
+     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID ='InputNumber;
+   
+  List of rides starting at X location
+    Select * from vanPool.rideList where start = 'UserInputStart';
+  
+  List of rides ending at X location:
+    Select * from vanPool.rideList where dest = 'UserInputDest';
+
+  List of rides on X date: 
+    Select * from vanPool.rideList where rideDate = 'YYYY:MM:DD';
+
+  List of rides at X time:
+    Select * from vanPool.rideList where startTime >='HH:MM:00' and startTime <= 'HH:MM:00';
+
+  List of rides between dates:
+    Select * from vanPool.rideList where rideDate >= 'YYYY:MM:DD' and rideDate <='YYYY:MM:DD';
+
+
+
+  Adding user to a ride: 
+    Insert into vanPool.ridePassengers values (UserNum, RideNum);
+  
+  
+  If you can think of anything else just put them under these and I'll work on getting them done.
   
 
 */
