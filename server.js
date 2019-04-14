@@ -40,7 +40,24 @@ var connection = mySql.createConnection({
   password: "Team8-SoftwareFund"
 });
 connection.connect();
+/*
+  Queries to find differnt things
 
+  Rides without a driver:
+    Select * from vanPool.rideList where driverID = -1;
+
+  List of rides that the user has been in:
+    Select * from vanPool.rideList inner join vanPool.ridePassengers on rideID where userID = currentUserID;
+  
+  List of rides the driver has driven:
+    Select * from vanPool.rideList where driverID = currentUserID;
+  
+  List of all people on a ride:
+     Select email from vanPool.UserList inner 
+     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID = InputNumber;
+  
+
+*/
 // ================ Express Views Setup ==========================
 
 // ***** Home *****
