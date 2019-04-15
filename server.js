@@ -53,29 +53,34 @@ connection.connect();
     Select * from vanPool.rideList where driverID = currentUserID;
   
   List of all people on a ride:
-     Select email from vanPool.UserList inner 
-     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID ='InputNumber;
+     Select * from vanPool.UserList inner 
+     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID = InputNumber;
    
-  List of rides starting at X location
-    Select * from vanPool.rideList where start = 'UserInputStart';
+  List of rides starting at X location with a driver:
+    Select * from vanPool.rideList where start = 'UserInputStart' and driverID != -1;;
   
-  List of rides ending at X location:
-    Select * from vanPool.rideList where dest = 'UserInputDest';
+  List of rides ending at X location with a driver:
+    Select * from vanPool.rideList where dest = 'UserInputDest' and driverID != -1;;
 
-  List of rides on X date: 
-    Select * from vanPool.rideList where rideDate = 'YYYY:MM:DD';
+  List of rides on X date with a driver: 
+    Select * from vanPool.rideList where rideDate = 'YYYY:MM:DD' and driverID != -1;
 
-  List of rides at X time:
-    Select * from vanPool.rideList where startTime >='HH:MM:00' and startTime <= 'HH:MM:00';
+  List of rides at X time with a driver:
+    Select * from vanPool.rideList where startTime >='HH:MM:00' 
+    and startTime <= 'HH:MM:00' and driverID != -1;;
 
   List of rides between dates:
-    Select * from vanPool.rideList where rideDate >= 'YYYY:MM:DD' and rideDate <='YYYY:MM:DD';
-
-
+    Select * from vanPool.rideList where rideDate >= 'YYYY:MM:DD' 
+    and rideDate <='YYYY:MM:DD' and driverID != -1;
 
   Adding user to a ride: 
     Insert into vanPool.ridePassengers values (UserNum, RideNum);
   
+  List of all riders:
+    Select * from vanPool.UserList where accountType = 3;
+
+  List of all drivers:
+    Select * from vanPool.UserList where accountType = 2;
   
   If you can think of anything else just put them under these and I'll work on getting them done.
   
@@ -230,21 +235,18 @@ app.get("/createRide", (req, res) => {
 
 app.post("/createRide", function(req, res) {
   var newRide;
-  newUser = {
+  newRide = {
     start: req.body.startLoc,
     dest: req.body.dest,
     startTime: req.body.startTime,
-    carId: req.body.carId
   };
   sql =
-    "INSERT INTO vanPool.rideList (startLocation, dest, startTime, carID) VALUES ('" +
+    "INSERT INTO vanPool.rideList (startLocation, dest, startTime) VALUES ('" +
     newRide.startLoc +
     "', '" +
     newRide.dest +
     "', '" +
     newRide.startTime +
-    "', '" +
-    newRide.carId +
     "');";
   connection.query(sql, function(err, results) {
     if (err) console.log(err.stack);
