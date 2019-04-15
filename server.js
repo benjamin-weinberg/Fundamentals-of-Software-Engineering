@@ -45,6 +45,9 @@ connection.connect();
 
   Rides without a driver:
     Select * from vanPool.rideList where driverID = -1;
+  
+  Adding a driver to a ride:
+    Update driverID = CURRENTUSERNUM where rideID = CurrentlySelectedRide;
 
   List of rides that the user has been in:
     Select * from vanPool.rideList inner join vanPool.ridePassengers on rideID where userID = currentUserID;
@@ -81,6 +84,8 @@ connection.connect();
 
   List of all drivers:
     Select * from vanPool.UserList where accountType = 2;
+  
+  
   
   If you can think of anything else just put them under these and I'll work on getting them done.
   
