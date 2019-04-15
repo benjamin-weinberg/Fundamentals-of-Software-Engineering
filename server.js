@@ -130,9 +130,9 @@ app.post("/login", function(req, res) {
       };
       req.session.user = user;
       if (user.accountType == 2) {
-        res.redirect("/rider");
-      } else if (user.accountType == 3) {
         res.redirect("/driver");
+      } else if (user.accountType == 3) {
+        res.redirect("/rider");
       } else {
         res.redirect("/home");
       }
