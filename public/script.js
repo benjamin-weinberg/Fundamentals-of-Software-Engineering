@@ -26,6 +26,4 @@ function addUser(){
     var password = document.getElementById("password").value;
     var password2 = document.getElementById("confirm").value;
 
-
-    
 }
