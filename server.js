@@ -85,7 +85,8 @@ connection.connect();
   List of all drivers:
     Select * from vanPool.UserList where accountType = 2;
   
-  
+  Number of rides from todays date onward:
+    SELECT count(rideNum) from vanPool.rideList where rideDate >= curdate();
   
   If you can think of anything else just put them under these and I'll work on getting them done.
   
@@ -122,6 +123,7 @@ app.post("/login", function(req, res) {
       res.redirect("login");
     } else {
       var user = {
+        userNum: results[0].userNum,
         name: results[0].name,
         email: results[0].email,
         username: results[0].username,
@@ -183,6 +185,7 @@ app.post("/signup", function(req, res) {
           "');";
         connection.query(sql, function(err, results) {
           if (err) console.log(err.stack);
+
           req.session.user = newUser;
           if (newUser.accountType == 2) {
             res.redirect("/rider");
@@ -225,6 +228,27 @@ app.get("/driver", isAuthenticated, function(req, res) {
     layout: "default",
     template: "home-template",
     username: req.session.user.username
+  });
+});
+
+app.post("/driver", function(req, res){
+
+  var newRide ={
+    startLoc: req.body.start,
+    dest: req.body.dest,
+    startTime: req.body.startTime,
+    rideDate: req.body.rideDate,
+    driverID: req.session.user.userNum
+  };
+  
+  var sql = "INSERT INTO vanPool.rideList (start, dest, startTime, rideDate, driverID) VALUES ('" 
+  +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
+  +newRide.driverID+");";
+  connection.query(sql, function(err, results){
+    if(err) console.log(err.stack);
+    else{
+      res.redirect("/driver");
+    }
   });
 });
 
