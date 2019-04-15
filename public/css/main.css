@@ -49,3 +49,14 @@ h1 {
   font-style: oblique;
   font-size: 5em;
 }
+
+th, td {
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {background-color: #f2f2f2;}
+
+table {
+  margin: 40px;
+}
