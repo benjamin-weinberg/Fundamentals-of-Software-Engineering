@@ -204,11 +204,19 @@ app.get("/protected_page", isAuthenticated, function(req, res) {
 
 // ***** Rider Page *****
 app.get("/rider", isAuthenticated, function(req, res) {
+  var sql = "CALL vanPool.allRidesFromTodayOnward();";
+  connection.query(sql, function(err, results){
+    if(err) console.log(err.stack);
+    else{
+
   res.render("rider", {
     layout: "default",
     template: "home-template",
-    username: req.session.user.username
+    username: req.session.user.username,
+    context: results[0]
   });
+}
+});
 });
 
 // ***** Driver Page *****
@@ -225,7 +233,6 @@ app.get("/driver", isAuthenticated, function(req, res) {
         username: req.session.user.username,
         context: results[0]
       });
-      console.log(results[0]);
     }
     });
   
