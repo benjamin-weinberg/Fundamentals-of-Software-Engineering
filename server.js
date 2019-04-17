@@ -109,12 +109,12 @@ app.get("/login", function(req, res, next) {
 });
 
 app.post("/login", function(req, res) {
-  var sql = "CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
-    // "SELECT * FROM vanPool.UserList WHERE username = '" +
-    // req.body.username +
-    // "' AND userPassword = '" +
-    // md5(req.body.password) +
-    // "';";
+ //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
+   var sql =  "SELECT * FROM vanPool.UserList WHERE username = '" +
+    req.body.username +
+    "' AND userPassword = '" +
+    md5(req.body.password) +
+    "';";
   connection.query(sql, function(err, results) {
     if (err) console.log(err.stack);
     if (results[0] == undefined) {
@@ -129,6 +129,7 @@ app.post("/login", function(req, res) {
         userPassword: results[0].userPassword,
         accountType: results[0].accountType
       };
+      console.log(results[0].accountType);
       req.session.user = user;
       if (user.accountType == 2) {
         res.redirect("/driver");
