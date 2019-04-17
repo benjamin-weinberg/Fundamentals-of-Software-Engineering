@@ -120,7 +120,6 @@ app.post("/login", function(req, res) {
     if (results[0] == undefined) {
       res.redirect("login");
     } else {
-      console.log(results[0]);
       var user = {
         userNum: results[0].userNum,
         name: results[0].name,
@@ -129,7 +128,6 @@ app.post("/login", function(req, res) {
         userPassword: results[0].userPassword,
         accountType: results[0].accountType
       };
-      console.log(results[0].accountType);
       req.session.user = user;
       if (user.accountType == 2) {
         res.redirect("/driver");
@@ -215,11 +213,23 @@ app.get("/rider", isAuthenticated, function(req, res) {
 
 // ***** Driver Page *****
 app.get("/driver", isAuthenticated, function(req, res) {
-  res.render("driver", {
-    layout: "default",
-    template: "home-template",
-    username: req.session.user.username
-  });
+  var sql = "CALL vanPool.rideWithoutDriver();";
+
+  connection.query(sql, function(err, results){
+    if(err) console.log(err.stack);
+    else{
+
+      res.render("driver", {
+        layout: "default",
+        template: "home-template",
+        username: req.session.user.username,
+        context: results[0]
+      });
+      console.log(results[0]);
+    }
+    });
+  
+
 });
 
 app.post("/driver", function(req, res){
