@@ -44,49 +44,47 @@ connection.connect();
   Queries to find differnt things
 
   Rides without a driver:
-    Select * from vanPool.rideList where driverID = -1;
+    CALL vanPool.rideWithoutDriver
   
   Adding a driver to a ride:
-    Update driverID = CURRENTUSERNUM where rideID = CurrentlySelectedRide;
+    CALL vanPool.addDriverToRide(req.session.user.userNum, RIDENUM)
 
   List of rides that the user has been in:
-    Select * from vanPool.rideList inner join vanPool.ridePassengers on rideID where userID = currentUserID;
+    CALL vanPool.allRidesForUser(USERNUM);
   
   List of rides the driver has driven:
-    Select * from vanPool.rideList where driverID = currentUserID;
+    CALL vanPool.allDrivesForUser(USERNUM);
   
   List of all people on a ride:
-     Select * from vanPool.UserList inner 
-     join vanPool.ridePassengers on UserList.userNum = ridePassengers.userNum where rideID = InputNumber;
+     CALL vanPool.listOfUsersInRide(RIDEID);
    
   List of rides starting at X location with a driver:
-    Select * from vanPool.rideList where start = 'UserInputStart' and driverID != -1;;
+    CALL vanPool.findRidesByStartLocation(STARTLOCATION);
   
   List of rides ending at X location with a driver:
-    Select * from vanPool.rideList where dest = 'UserInputDest' and driverID != -1;;
+    CALL vanPool.findRidesByDestination(DEST);
 
   List of rides on X date with a driver: 
-    Select * from vanPool.rideList where rideDate = 'YYYY:MM:DD' and driverID != -1;
+    call vanPool.findRidesOnDate(DATE);
 
   List of rides at X time with a driver:
-    Select * from vanPool.rideList where startTime >='HH:MM:00' 
-    and startTime <= 'HH:MM:00' and driverID != -1;;
+    CALL vanPool.findRidesBetweenTimes(TIME1,TIME2);
 
   List of rides between dates:
-    Select * from vanPool.rideList where rideDate >= 'YYYY:MM:DD' 
-    and rideDate <='YYYY:MM:DD' and driverID != -1;
+    CALL vanPool.findRideBetweenDates(DATE1, DATE2);
+    There is a check in this stored procedure so if date2 is less than date1 it will still work
 
   Adding user to a ride: 
-    Insert into vanPool.ridePassengers values (UserNum, RideNum);
+    CALL vanPool.addUserToRide(req.session.user.userNum, RIDENUMBER);
   
   List of all riders:
-    Select * from vanPool.UserList where accountType = 3;
+    CALL vanPool.listRiders();
 
   List of all drivers:
-    Select * from vanPool.UserList where accountType = 2;
+    CALL vanPool.listDrivers();
   
   Number of rides from todays date onward:
-    SELECT count(rideNum) from vanPool.rideList where rideDate >= curdate();
+    CALL vanPool.numberOfRidesFromTodayOnwards();
   
   If you can think of anything else just put them under these and I'll work on getting them done.
   
@@ -111,23 +109,24 @@ app.get("/login", function(req, res, next) {
 });
 
 app.post("/login", function(req, res) {
-  var sql =
-    "SELECT * FROM vanPool.UserList WHERE username = '" +
-    req.body.username +
-    "' AND password = '" +
-    md5(req.body.password) +
-    "';";
+  var sql = "CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
+    // "SELECT * FROM vanPool.UserList WHERE username = '" +
+    // req.body.username +
+    // "' AND userPassword = '" +
+    // md5(req.body.password) +
+    // "';";
   connection.query(sql, function(err, results) {
     if (err) console.log(err.stack);
     if (results[0] == undefined) {
       res.redirect("login");
     } else {
+      console.log(results[0]);
       var user = {
         userNum: results[0].userNum,
         name: results[0].name,
         email: results[0].email,
         username: results[0].username,
-        password: md5(results[0].password),
+        userPassword: results[0].userPassword,
         accountType: results[0].accountType
       };
       req.session.user = user;
@@ -153,10 +152,10 @@ app.post("/signup", function(req, res) {
     res.send("Invalid details!");
   } else {
     var newUser;
-    var sql =
-      "SELECT * FROM vanPool.UserList WHERE username = '" +
-      req.body.username +
-      "';";
+    var sql = "CALL vanPool.findUsername('" + req.body.username + "');";
+      // "SELECT * FROM vanPool.UserList WHERE username = '" +
+      // req.body.username +
+      // "';";
     connection.query(sql, function(err, results) {
       if (err) console.log(err.stack);
       if (results[0] != undefined) {
@@ -168,21 +167,12 @@ app.post("/signup", function(req, res) {
           name: req.body.name,
           email: req.body.email,
           username: req.body.username,
-          password: md5(req.body.password),
+          userPassword: md5(req.body.password),
           accountType: req.body.accountType
         };
-        sql =
-          "INSERT INTO vanPool.UserList (name, email, username, password, accountType) VALUES ('" +
-          newUser.name +
-          "', '" +
-          newUser.email +
-          "', '" +
-          newUser.username +
-          "', '" +
-          newUser.password +
-          "', '" +
-          newUser.accountType +
-          "');";
+        sql = "CALL vanPool.addUser('"+newUser.name+"','"+newUser.email+"','"+newUser.username+"','"+newUser.userPassword
+        +"','"+newUser.accountType+"');"
+
         connection.query(sql, function(err, results) {
           if (err) console.log(err.stack);
 
@@ -241,9 +231,11 @@ app.post("/driver", function(req, res){
     driverID: req.session.user.userNum
   };
   
-  var sql = "INSERT INTO vanPool.rideList (start, dest, startTime, rideDate, driverID) VALUES ('" 
-  +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
-  +newRide.driverID+");";
+  var sql = "CALL vanPool.addRideFromDriver ('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"
+  +newRide.rideDate+"','"+newRide.driverID+");"
+  // "INSERT INTO vanPool.rideList (start, dest, startTime, rideDate, driverID) VALUES ('" 
+  // +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
+  // +newRide.driverID+");";
   connection.query(sql, function(err, results){
     if(err) console.log(err.stack);
     else{
@@ -268,15 +260,16 @@ app.post("/createRide", function(req, res) {
     start: req.body.startLoc,
     dest: req.body.dest,
     startTime: req.body.startTime,
+    rideDate: req.body.rideDate
   };
-  sql =
-    "INSERT INTO vanPool.rideList (startLocation, dest, startTime) VALUES ('" +
-    newRide.startLoc +
-    "', '" +
-    newRide.dest +
-    "', '" +
-    newRide.startTime +
-    "');";
+  sql = "call vanPool.addRideFromAdmin('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"');";
+    // "INSERT INTO vanPool.rideList (startLocation, dest, startTime) VALUES ('" +
+    // newRide.startLoc +
+    // "', '" +
+    // newRide.dest +
+    // "', '" +
+    // newRide.startTime +
+    // "');";
   connection.query(sql, function(err, results) {
     if (err) console.log(err.stack);
     res.redirect("/home");
