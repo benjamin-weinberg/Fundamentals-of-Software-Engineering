@@ -6,7 +6,7 @@
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-8">
-                    <div class="card">
+                    <div class="card text-white bg-dark mb-3">
                         <div class="card-header">Create your own ride</div>
                         <div class="card-body">
                             <form class="form-horizontal" method="post" action="#">
@@ -78,11 +78,11 @@
         </tr>
 
         {{#each context}}
-        <tr class = "drives">
-          <td class="drives">{{startLoc}}</td>
-          <td class="drives" >{{dest}}</td> 
-          <td class="drives" >{{startTime}}</td>
-          <td class="drives" >{{rideDate}}</td>
+        <tr name = {{rideNum}}>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+          <td>{{startTime}}</td>
+          <td>{{rideDate}}</td>
           <td>
               <button type="submit" class="btn btn-primary btn-small">
                                     Select

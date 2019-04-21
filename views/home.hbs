@@ -2,31 +2,23 @@
   <link href="./css/main.css" rel="stylesheet" />
   <body>
    
-      <div class="content-placeholder">
-      <div class="card text-white bg-dark mb-3" style='position: absolute; top: 150px; left: 200px'>
+      <div class="content-placeholder" style="width">
+      <div class="card text-white bg-dark mb-3" style='position: absolute; top: 150px; left: 20px; width: 45%'>
     <div class="card-header">
       Upcoming Rides
     </div>
+    {{#each context}}
     <div class="card-body">
-      <blockquote class="blockquote mb-0" style="padding: 10px">
-          <div id="box1"></div>
-          <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-            <script id="ride-temp" type="text/x-handlebars-template">
-                <p>Starting in {{start}} going to {{dest}}. This ride starts at {{startTime}} on {{rideDate}}</p>
-            </script>
-            <script src = "../script.js"></script>
-        <a href="/login" class="btn btn-light">Claim spot </a>
-        
-      </blockquote>
-      <blockquote class="blockquote mb-0" style="padding: 10px">
-        <p>Get ride from database</p>
-        <a href="/login" class="btn btn-light">Claim Spot</a>
-      </blockquote>
-      <blockquote class="blockquote mb-0" style="padding: 10px">
-        <p>Get ride from database</p>
-        <a href="/login" class="btn btn-light">Claim Spot</a>
-      </blockquote>
+      <blockquote class="blockquote mb-0" style="padding: 10px;">
+            <p>Starting in {{startLoc}} going to {{dest}}. This ride starts at {{startTime}} on {{rideDate}}</p>
+            {{#if username}}
+              <a href="/home" class="btn btn-light">Claim spot </a>
+            {{else}}
+              <a href="/login" class="btn btn-light">Claim spot </a>
+            {{/if}}
+      </blockquote> 
     </div>
+    {{/each}}
   </div>
   </div>
   </body>

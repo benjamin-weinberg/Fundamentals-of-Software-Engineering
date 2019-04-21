@@ -10,6 +10,7 @@ var bodyParser = require("body-parser");
 
 var path = require("path");
 var script = require("./public/script");
+var nodemailer = require("nodemailer");
 
 // ================= Express Setup ===================
 
@@ -32,7 +33,14 @@ app.engine(
     partialsDir: __dirname + "/views/partials/"
   })
 );
-
+// ================= Email Sender =========================
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'bnrrideshare@gmail.com',
+    pass: 'ece5800Team8'
+  }
+});
 // ================= MySQL Connection =====================
 var connection = mySql.createConnection({
   host: "104.198.21.61",
@@ -94,14 +102,25 @@ connection.connect();
 
 // ***** Home *****
 app.get("/home", function(req, res, next) {
-  if (req.session.user)
-    res.render("home", {
-      layout: "default",
-      template: "home-template",
-      username: req.session.user.username
-    });
-  else res.render("home", { layout: "default", template: "home-template" });
+  var sql = "CALL vanPool.allRidesFromTodayOnward();";
+  connection.query(sql, function(err, results){
+    if(err) console.log(err.stack);
+      else{
+        if (req.session.user)
+          res.render("home", {
+          layout: "default",
+          template: "home-template",
+          username: req.session.user.username,
+          context: results[0]
+        });
+        else res.render("home", { 
+        layout: "default", 
+        template: "home-template",
+        context: results[0]});
+      }
+  });
 });
+
 
 // ***** Login *****
 app.get("/login", function(req, res, next) {
@@ -208,8 +227,8 @@ app.get("/rider", isAuthenticated, function(req, res) {
   connection.query(sql, function(err, results){
     if(err) console.log(err.stack);
     else{
-
-  res.render("rider", {
+    
+    res.render("rider", {
     layout: "default",
     template: "home-template",
     username: req.session.user.username,
@@ -226,7 +245,6 @@ app.get("/driver", isAuthenticated, function(req, res) {
   connection.query(sql, function(err, results){
     if(err) console.log(err.stack);
     else{
-
       res.render("driver", {
         layout: "default",
         template: "home-template",
@@ -293,7 +311,67 @@ app.post("/createRide", function(req, res) {
     res.redirect("/home");
   });
 });
+// ***** Forgot Password ******
 
+app.get("/forgotPassword", function(req, res, next) {
+  res.render("forgotPassword", { layout: "default", template: "signup-template" });
+});
+
+app.post("/forgotPassword", function(req, res) {
+  //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
+    var sql =  "SELECT * FROM vanPool.UserList WHERE username = '" +
+     req.body.username +
+     "' AND email = '" +
+     req.body.email +
+     "';";
+   connection.query(sql, function(err, results) {
+     if (err) console.log(err.stack);
+     if(results[0] == null){
+        console.log('here');
+
+     }
+     else{
+        var mailOptions ={
+          from: 'brnrideshare@gmail.com',
+          to: results[0].email,
+          subject: "Password Reset",
+          html:"<h1>Password Reset<h1> <br> <a href='http://localhost:3000/passwordReset'>Password Reset Link<a>"
+       }
+       transporter.sendMail(mailOptions, function(err, info){
+          if(err) console.log(err.stack);
+          else{
+            console.log('Email sent: ' + info.response);
+          }
+       });
+     }
+   });
+   res.redirect("/passwordResetSent");
+ });
+// ***** Password Rest ******
+app.get("/passwordReset", function(req, res, next) {
+  res.render("passwordReset", { layout: "default", template: "signup-template" });
+});
+
+app.post("/passwordReset", function(req, res) {
+  //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
+    var sql =  "UPDATE vanPool.UserList SET password ='" +
+     md5(req.body.password) +
+     "' WHERE username = '" +
+     req.body.username +
+     "';";
+   connection.query(sql, function(err, results) {
+      if (err) {console.log(err.stack);}
+      else{
+       
+      }
+   });
+   res.redirect("/home");
+ });
+
+ // ***** Link Sent ******
+ app.get("/passwordResetSent", function(req, res, next) {
+  res.render("passwordResetSent", { layout: "default", template: "signup-template" });
+});
 // ==================== helper functions ========================
 function isAuthenticated(req, res, next) {
   if (req.session.user) return next();
