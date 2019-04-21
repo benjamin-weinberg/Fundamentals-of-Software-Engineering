@@ -267,11 +267,11 @@ app.post("/driver", function(req, res){
     driverID: req.session.user.userNum
   };
   
-  var sql = "CALL vanPool.addRideFromDriver ('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"
-  +newRide.rideDate+"','"+newRide.driverID+");"
-  // "INSERT INTO vanPool.rideList (start, dest, startTime, rideDate, driverID) VALUES ('" 
-  // +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
-  // +newRide.driverID+");";
+  // var sql = "CALL vanPool.addRideFromDriver ('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"
+  // +newRide.rideDate+"','"+newRide.driverID+");"
+  var sql ="INSERT INTO vanPool.rideList (startLoc, dest, startTime, rideDate, driverID) VALUES ('" 
+  +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
+  +newRide.driverID+");";
   connection.query(sql, function(err, results){
     if(err) console.log(err.stack);
     else{
