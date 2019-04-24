@@ -164,21 +164,27 @@
     });
 
   // ***** Rider Page *****
-    app.get("/rider", isAuthenticated, function(req, res) {
-      var sql = "CALL vanPool.allRidesFromTodayOnward();";
-      connection.query(sql, function(err, results){
-        if(err) console.log(err.stack);
-        else{
-        
-        res.render("rider", {
-        layout: "default",
-        template: "home-template",
-        username: req.session.user.username,
-        context: results[0]
-      });
-    }
+  app.get("/rider", isAuthenticated, function(req, res) {
+    var sql = "CALL vanPool.allRidesFromTodayOnward();";
+    connection.query(sql, function(err, results1){
+      if(err) console.log(err.stack);
+      else{
+        sql = "CALL vanPool.allRidesForUser("+req.session.user.userNum+");";
+        connection.query(sql, function(err, results2){
+          if(err) console.log(err.stack);
+          else{
+            res.render("rider", {
+              layout: "default",
+              template: "home-template",
+              username: req.session.user.username,
+              context1: results1[0],
+              context2: results2[0]
+            });
+          }
+        });
+      }
     });
-    });
+  });
 
   // ***** Driver Page *****
     app.get("/driver", isAuthenticated, function(req, res) {

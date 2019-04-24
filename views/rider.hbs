@@ -9,7 +9,7 @@
           <th>Ride Date</th>
         </tr>
 
-        {{#each context}}
+        {{#each context1}}
         <tr class = "drives">
           <td class="drives">{{startLoc}}</td>
           <td class="drives" >{{dest}}</td> 
@@ -20,6 +20,24 @@
                   <button>Submit</button>
               </a>
           </td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Pick-Up</th>
+          <th>Destination</th> 
+          <th>Start Time</th>
+          <th>Ride Date</th>
+        </tr>
+
+        {{#each context2}}
+        <tr class = "drives">
+          <td class="drives">{{startLoc}}</td>
+          <td class="drives" >{{dest}}</td> 
+          <td class="drives" >{{startTime}}</td>
+          <td class="drives" >{{rideDate}}</td>
         </tr>
         {{/each}}
     </table>
