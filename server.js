@@ -281,8 +281,9 @@
   // ***** Claim Ride ****** 
   app.get("/claimRide/:rideNum", isAuthenticated, function(req, res) {
     var rideNumber = req.params.rideNum;
+
     console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
-    var sql = "CALL vanPool.allRidesFromTodayOnward();";
+    var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
     connection.query(sql, function(err, results){
       if(err) console.log(err.stack);
       else{
