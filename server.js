@@ -97,7 +97,10 @@
           accountType: results[0].accountType
         };
         req.session.user = user;
-        if (user.accountType == 2) {
+        if (user.accountType == 1) {
+          res.redirect("/admin");
+        }
+        else if (user.accountType == 2) {
           res.redirect("/driver");
         } else if (user.accountType == 3) {
           res.redirect("/rider");
@@ -217,6 +220,53 @@
       }
     });
   });
+
+  // ***** Admin Page *****
+app.get("/admin", isAuthenticated, function(req, res) {
+  var sql = "CALL vanPool.rideWithoutDriver();";
+
+  connection.query(sql, function(err, results1){
+    if(err) console.log(err.stack);
+    else{
+      sql = "CALL vanPool.allRideInformationWithDriver();";
+      connection.query(sql, function(err, results2){
+        if(err) console.log(err.stack);
+        else{
+          res.render("admin", {
+            layout: "default",
+            template: "home-template",
+            username: req.session.user.username,
+            context1: results1[0],
+            context2: results2[0]
+          });
+        }
+        });
+    }
+    });
+  
+});
+
+app.post("/admin", function(req, res){
+
+  var newRide ={
+    startLoc: req.body.start,
+    dest: req.body.dest,
+    startTime: req.body.startTime,
+    rideDate: req.body.rideDate,
+    driverID: req.session.user.userNum
+  };
+  
+  var sql ="INSERT INTO vanPool.rideList (startLoc, dest, startTime, rideDate, driverID) VALUES ('" 
+  +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
+  +newRide.driverID+");";
+  connection.query(sql, function(err, results){
+    if(err) console.log(err.stack);
+    else{
+      res.redirect("/driver");
+    }
+  });
+});
+
 
   // ***** Forgot Password ******
   app.get("/forgotPassword", function(req, res, next) {

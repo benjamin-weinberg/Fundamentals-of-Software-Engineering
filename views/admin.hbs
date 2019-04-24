@@ -1,0 +1,109 @@
+<link href="./css/main.css" rel="stylesheet" />
+
+<body>
+    <div style="width:800px; margin:0 auto;">
+        centered content
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="card text-white bg-dark mb-3">
+                        <div class="card-header">Create your own ride</div>
+                        <div class="card-body">
+                            <form class="form-horizontal" method="post" action="#">
+                                <div class="form-group">
+                                    <label for="pick-up" class="cols-sm-2 control-label">Start Location:</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa"
+                                                    aria-hidden="true"></i></span>
+                                            <input type="text" class="form-control" name="start" id="start"
+                                                placeholder="Start location" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="destination" class="cols-sm-2 control-label">Enter Destination:</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa"
+                                                    aria-hidden="true"></i></span>
+                                            <input type="text" class="form-control" name="dest" id="dest"
+                                                placeholder="Desination" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="time" class="cols-sm-2 control-label">Start time:</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa"
+                                                    aria-hidden="true"></i></span>
+                                            <input type="time" class="form-control" name="startTime" id="startTime"
+                                                placeholder="Start Time" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="date" class="cols-sm-2 control-label">Ride Date:</label>
+                                    <div class="cols-sm-10">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="fa fa-user fa"
+                                                    aria-hidden="true"></i></span>
+                                            <input type="date" class="form-control" name="rideDate" id="rideDate"
+                                                placeholder="YYYY/MM/DD" required/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group ">
+                                    <button type="submit"
+                                        class="btn btn-primary btn-lg btn-block login-button">
+                                        Create Ride
+                                    </button>
+                                 </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="admin">Rides with a Driver</h1>
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Pick-Up</th>
+          <th>Destination</th> 
+          <th>Start Time</th>
+          <th>Ride Date</th>
+        </tr>
+
+        {{#each context1}}
+        <tr name = {{rideNum}}>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+          <td>{{startTime}}</td>
+          <td>{{rideDate}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    
+    <h1 class="admin"> All Rides without a Driver</h1>
+    <table style="width:95%",  bgcolor = "white", align="center">
+        
+        <tr>
+          <th>Pick-Up</th>
+          <th>Destination</th> 
+          <th>Start Time</th>
+          <th>Ride Date</th>
+        </tr>
+
+        {{#each context2}}
+        <tr name = {{rideNum}}>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+          <td>{{startTime}}</td>
+          <td>{{rideDate}}</td>
+        </tr>
+        {{/each}}
+    </table>
+</body>
