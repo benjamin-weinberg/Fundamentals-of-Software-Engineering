@@ -68,13 +68,14 @@
         </div>
     </div>
 
-    
+    <h1> All Rides without a Driver</h1>
     <table style="width:95%", bgcolor = "white", align="center">
         <tr>
           <th>Pick-Up</th>
           <th>Destination</th> 
           <th>Start Time</th>
           <th>Ride Date</th>
+          <th>Capacity</th>
         </tr>
 
         {{#each context}}
@@ -83,11 +84,50 @@
           <td>{{dest}}</td> 
           <td>{{startTime}}</td>
           <td>{{rideDate}}</td>
+          <td>{{capacity}}</td>
           <td>
-              <button type="submit" class="btn btn-primary btn-small">
-                                    Select
-              </button>
+              <a href="http://localhost:3000/claimRide/{{rideNum}}">
+                  <button>Submit</button>
+              </a>
           </td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h1> Driver History</h1>
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Pick-Up</th>
+          <th>Destination</th> 
+          <th>Start Time</th>
+          <th>Ride Date</th>
+        </tr>
+
+        {{#each context2}}
+        <tr>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+          <td>{{startTime}}</td>
+          <td>{{rideDate}}</td>
+        </tr>
+        {{/each}}
+    </table>
+
+    <h1> Riders in your Car</h1>
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Name</th>
+          <th>E-mail</th> 
+          <th>Pick-Up Location</th>
+          <th>Destination</th>
+        </tr>
+
+        {{#each context3}}
+        <tr>
+          <td>{{nameOfUser}}</td>
+          <td>{{email}}</td>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
         </tr>
         {{/each}}
     </table>

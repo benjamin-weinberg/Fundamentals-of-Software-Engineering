@@ -68,13 +68,14 @@
         </div>
     </div>
 
-    <h1 class="admin">Rides with a Driver</h1>
+    <h1 class="admin">Rides Without a Driver</h1>
     <table style="width:95%", bgcolor = "white", align="center">
         <tr>
           <th>Pick-Up</th>
           <th>Destination</th> 
           <th>Start Time</th>
           <th>Ride Date</th>
+          <th>Capacity</th>
         </tr>
 
         {{#each context1}}
@@ -83,11 +84,12 @@
           <td>{{dest}}</td> 
           <td>{{startTime}}</td>
           <td>{{rideDate}}</td>
+          <td>{{capacity}}</td>
         </tr>
         {{/each}}
     </table>
     
-    <h1 class="admin"> All Rides without a Driver</h1>
+    <h1 class="admin"> All Rides with a Driver</h1>
     <table style="width:95%",  bgcolor = "white", align="center">
         
         <tr>
@@ -95,6 +97,7 @@
           <th>Destination</th> 
           <th>Start Time</th>
           <th>Ride Date</th>
+          <th>Capacity</th>
         </tr>
 
         {{#each context2}}
@@ -103,6 +106,7 @@
           <td>{{dest}}</td> 
           <td>{{startTime}}</td>
           <td>{{rideDate}}</td>
+          <td>{{capacity}}</td>
         </tr>
         {{/each}}
     </table>
