@@ -53,7 +53,7 @@
 // ================ Express Views Setup ==========================
   // ***** Home *****
     app.get("/home", function(req, res, next) {
-      var sql = "CALL vanPool.allRidesFromTodayOnward();";
+      var sql = "CALL vanPool.allRidesFromTodayOnwardNotLoggedIn();";
       connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
           else{
@@ -165,7 +165,7 @@
 
   // ***** Rider Page *****
     app.get("/rider", isAuthenticated, function(req, res) {
-      var sql = "CALL vanPool.allRidesFromTodayOnward();";
+      var sql = "CALL vanPool.allRidesFromTodayOnward("+req.session.user.userNum+");";
       connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
         else{
@@ -206,6 +206,7 @@
         startTime: req.body.startTime,
         rideDate: req.body.rideDate,
         driverID: req.session.user.userNum
+        
       };
       
       // var sql = "CALL vanPool.addRideFromDriver ('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"
