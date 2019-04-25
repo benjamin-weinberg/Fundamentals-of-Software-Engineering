@@ -93,4 +93,23 @@
         </tr>
         {{/each}}
     </table>
+
+    <h1> Driver History</h1>
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Pick-Up</th>
+          <th>Destination</th> 
+          <th>Start Time</th>
+          <th>Ride Date</th>
+        </tr>
+
+        {{#each context2}}
+        <tr>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+          <td>{{startTime}}</td>
+          <td>{{rideDate}}</td>
+        </tr>
+        {{/each}}
+    </table>
 </body>

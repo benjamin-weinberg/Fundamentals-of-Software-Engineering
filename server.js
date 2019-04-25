@@ -187,23 +187,29 @@
     });
 
   // ***** Driver Page *****
+
     app.get("/driver", isAuthenticated, function(req, res) {
       var sql = "CALL vanPool.rideWithoutDriver();";
-
-      connection.query(sql, function(err, results){
+      connection.query(sql, function(err, results1){
         if(err) console.log(err.stack);
         else{
-          res.render("driver", {
-            layout: "default",
-            template: "home-template",
-            username: req.session.user.username,
-            context: results[0]
+          sql = "CALL vanPool.allDrivesForUser("+req.session.user.userNum+");";
+          connection.query(sql, function(err, results2){
+            if(err) console.log(err.stack);
+            else{
+              res.render("driver", {
+                layout: "default",                  
+                template: "home-template",
+                username: req.session.user.username,
+                context1: results1[0],
+                context2: results2[0]
+              });
+            }
           });
         }
-        });
-      
-
+      });
     });
+    
     app.post("/driver", function(req, res){
 
       var newRide ={
@@ -338,24 +344,14 @@
     app.get("/claimRide/:rideNum", isAuthenticated, function(req, res) {
       var rideNumber = req.params.rideNum;
 
-      if (req.session.user.accountType == "2"){ // driver
-        var sql = "CALL vanPool.addDriverToRide("+req.session.user.userNum+","+rideNumber+");";
-        connection.query(sql, function(err, results){
-          if(err) console.log(err.stack);
-          else{
-            res.redirect("/driver");
-          }
-        });
-      }
-      else{
-        var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
-        connection.query(sql, function(err, results){
-          if(err) console.log(err.stack);
-          else{
-            res.redirect("/rider");
-          }
-        });
-      }
+      console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
+      var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
+      connection.query(sql, function(err, results){
+        if(err) console.log(err.stack);
+        else{
+          res.redirect("/rider");
+        }
+      });
     });
 
   // ***** Default -> Home *****
