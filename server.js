@@ -166,7 +166,7 @@
   // ***** Rider Page *****
     app.get("/rider", isAuthenticated, function(req, res) {
       var sql = "CALL vanPool.allRidesFromTodayOnward("+req.session.user.userNum+");";
-      connection.query(sql, function(err, results){
+      connection.query(sql, function(err, results1){
 
         if(err) console.log(err.stack);
         else{
