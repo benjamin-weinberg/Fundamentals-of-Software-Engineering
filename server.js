@@ -339,7 +339,7 @@
       var rideNumber = req.params.rideNum;
 
       if (req.session.user.accountType == "2"){ // driver
-        var sql = "CALL vanPool.driverToRide("+req.session.user.userNum+","+rideNumber+");";
+        var sql = "CALL vanPool.addDriverToRide("+req.session.user.userNum+","+rideNumber+");";
         connection.query(sql, function(err, results){
           if(err) console.log(err.stack);
           else{
