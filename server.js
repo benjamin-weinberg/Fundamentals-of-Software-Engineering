@@ -197,19 +197,27 @@
           connection.query(sql, function(err, results2){
             if(err) console.log(err.stack);
             else{
-              res.render("driver", {
-                layout: "default",                  
-                template: "home-template",
-                username: req.session.user.username,
-                context1: results1[0],
-                context2: results2[0]
+              console.log(req.session.user.userNum);
+              sql = "CALL vanPool.listOfUsersInRide("+req.session.user.userNum+");";
+              connection.query(sql, function(err, results3){
+                if(err) console.log(err.stack);
+                else{
+                  res.render("driver", {
+                    layout: "default",                  
+                    template: "home-template",
+                    username: req.session.user.username,
+                    context1: results1[0],
+                    context2: results2[0],
+                    context3: results3[0]
+                  });
+                }
               });
             }
           });
         }
       });
     });
-    
+
     app.post("/driver", function(req, res){
 
       var newRide ={

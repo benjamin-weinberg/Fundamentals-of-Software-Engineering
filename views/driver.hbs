@@ -112,4 +112,23 @@
         </tr>
         {{/each}}
     </table>
+
+    <h1> Riders in your Car</h1>
+    <table style="width:95%", bgcolor = "white", align="center">
+        <tr>
+          <th>Name</th>
+          <th>E-mail</th> 
+          <th>Pick-Up Location</th>
+          <th>Destination</th>
+        </tr>
+
+        {{#each context3}}
+        <tr>
+          <td>{{nameOfUser}}</td>
+          <td>{{email}}</td>
+          <td>{{startLoc}}</td>
+          <td>{{dest}}</td> 
+        </tr>
+        {{/each}}
+    </table>
 </body>
