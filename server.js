@@ -121,10 +121,10 @@
         res.send("Invalid details!");
       } else {
         var newUser;
-        var sql = "CALL vanPool.findUsername('" + req.body.username + "');";
-          // "SELECT * FROM vanPool.UserList WHERE username = '" +
-          // req.body.username +
-          // "';";
+       // var sql = "CALL vanPool.findUsername('" + req.body.username + "');";
+        var sql = "SELECT * FROM vanPool.UserList WHERE username = '" +
+           req.body.username + "';";
+           
         connection.query(sql, function(err, results) {
           if (err) console.log(err.stack);
           if (results[0] != undefined) {
@@ -139,9 +139,10 @@
               userPassword: md5(req.body.password),
               accountType: req.body.accountType
             };
-            sql = "CALL vanPool.addUser('"+newUser.name+"','"+newUser.email+"','"+newUser.username+"','"+newUser.userPassword
-            +"','"+newUser.accountType+"');"
-
+           // call vanPool.addUser('ryan', 'ryan@ryan.com', 'ryan34', 'ryan', 2);
+            sql = "call vanPool.addUser('"+newUser.name+"','"+newUser.email+"','"+newUser.username+"','"+newUser.userPassword+"',"+
+          newUser.accountType+");";
+            console.log(sql);
             connection.query(sql, function(err, results) {
               if (err) console.log(err.stack);
 
