@@ -142,16 +142,34 @@
            // call vanPool.addUser('ryan', 'ryan@ryan.com', 'ryan34', 'ryan', 2);
             sql = "call vanPool.addUser('"+newUser.name+"','"+newUser.email+"','"+newUser.username+"','"+newUser.userPassword+"',"+
           newUser.accountType+");";
-            console.log(sql);
+            //console.log(sql);
             connection.query(sql, function(err, results) {
-              if (err) console.log(err.stack);
-
-              req.session.user = newUser;
-              if (newUser.accountType == 2) {
+             if (err) console.log(err.stack);
+             var sql = "SELECT * FROM vanPool.UserList WHERE username = '" +
+             req.body.username + "';";
+            connection.query(sql, function(err, results){
+              if(err) console.log(err.stack)
+              var user = {
+                userNum: results[0].userNum,
+                name: results[0].name,
+                email: results[0].email,
+                username: results[0].username,
+                userPassword: results[0].userPassword,
+                accountType: results[0].accountType
+              };
+              req.session.user = user;
+              if (newUser.accountType == 3) {
                 res.redirect("/rider");
-              } else if (newUser.accountType == 3) {
+              } else if (newUser.accountType == 2) {
                 res.redirect("/driver");
               }
+            });
+              // req.session.user = newUser;
+              // if (newUser.accountType == 3) {
+              //   res.redirect("/rider");
+              // } else if (newUser.accountType == 2) {
+              //   res.redirect("/driver");
+              // }
             });
           }
         });
@@ -167,6 +185,7 @@
   // ***** Rider Page *****
     app.get("/rider", isAuthenticated, function(req, res) {
       var sql = "CALL vanPool.allRidesFromTodayOnward("+req.session.user.userNum+");";
+      console.log(sql);
       connection.query(sql, function(err, results1){
 
         if(err) console.log(err.stack);
