@@ -9,7 +9,6 @@
   var bodyParser = require("body-parser");
 
   var path = require("path");
-  var script = require("./public/script");
   var nodemailer = require("nodemailer");
 
 // ================= Express Setup ===================

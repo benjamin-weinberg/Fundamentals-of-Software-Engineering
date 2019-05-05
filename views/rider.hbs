@@ -1,50 +1,50 @@
 <link href="./css/main.css" rel="stylesheet" />
 
 <body>
-    <h1>Rides with a Driver</h1>
-    <table style="width:95%", bgcolor = "white", align="center">
-        <tr>
-          <th>Pick-Up</th>
-          <th>Destination</th> 
-          <th>Start Time</th>
-          <th>Ride Date</th>
-          <th>Capacity</th>
-        </tr>
+  <h1>Rides with a Driver</h1>
+  <table style="width:95%" , bgcolor="white" , align="center">
+    <tr>
+      <th>Pick-Up</th>
+      <th>Destination</th>
+      <th>Start Time</th>
+      <th>Ride Date</th>
+      <th>Capacity</th>
+    </tr>
 
-        {{#each context1}}
-        <tr>
-          <td>{{startLoc}}</td>
-          <td>{{dest}}</td> 
-          <td>{{startTime}}</td>
-          <td>{{rideDate}}</td>
-          <td>{{capacity}}</td>
-          <td>
-              <a href="http://localhost:3000/claimRide/{{rideNum}}">
-                  <button>Submit</button>
-              </a>
-          </td>
-        </tr>
-        {{/each}}
-    </table>
+    {{#each context1}}
+    <tr>
+      <td>{{startLoc}}</td>
+      <td>{{dest}}</td>
+      <td>{{startTime}}</td>
+      <td>{{rideDate}}</td>
+      <td>{{capacity}}</td>
+      <td>
+        <a href="http://localhost:3000/claimRide/{{rideNum}}">
+          <button>Submit</button>
+        </a>
+      </td>
+    </tr>
+    {{/each}}
+  </table>
 
-    <h1> Ride History ($5.00 per ride)</h1>
-    <table style="width:95%", bgcolor = "white", align="center">
-        <tr>
-          <th>Pick-Up</th>
-          <th>Destination</th> 
-          <th>Start Time</th>
-          <th>Ride Date</th>
-          <th>Capacity</th>
-        </tr>
+  <h1> Ride History ($5.00 per ride)</h1>
+  <table style="width:95%" , bgcolor="white" , align="center">
+    <tr>
+      <th>Pick-Up</th>
+      <th>Destination</th>
+      <th>Start Time</th>
+      <th>Ride Date</th>
+      <th>Capacity</th>
+    </tr>
 
-        {{#each context2}}
-        <tr>
-          <td>{{startLoc}}</td>
-          <td>{{dest}}</td> 
-          <td>{{startTime}}</td>
-          <td>{{rideDate}}</td>
-          <td>{{capacity}}</td>
-        </tr>
-        {{/each}}
-    </table>
+    {{#each context2}}
+    <tr>
+      <td>{{startLoc}}</td>
+      <td>{{dest}}</td>
+      <td>{{startTime}}</td>
+      <td>{{rideDate}}</td>
+      <td>{{capacity}}</td>
+    </tr>
+    {{/each}}
+  </table>
 </body>

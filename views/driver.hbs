@@ -17,7 +17,7 @@
                                             <span class="input-group-addon"><i class="fa fa-user fa"
                                                     aria-hidden="true"></i></span>
                                             <input type="text" class="form-control" name="start" id="start"
-                                                placeholder="Start location" required/>
+                                                placeholder="Start location" required />
                                         </div>
                                     </div>
                                 </div>
@@ -28,7 +28,7 @@
                                             <span class="input-group-addon"><i class="fa fa-user fa"
                                                     aria-hidden="true"></i></span>
                                             <input type="text" class="form-control" name="dest" id="dest"
-                                                placeholder="Desination" required/>
+                                                placeholder="Desination" required />
                                         </div>
                                     </div>
                                 </div>
@@ -39,7 +39,7 @@
                                             <span class="input-group-addon"><i class="fa fa-user fa"
                                                     aria-hidden="true"></i></span>
                                             <input type="time" class="form-control" name="startTime" id="startTime"
-                                                placeholder="Start Time" required/>
+                                                placeholder="Start Time" required />
                                         </div>
                                     </div>
                                 </div>
@@ -50,16 +50,15 @@
                                             <span class="input-group-addon"><i class="fa fa-user fa"
                                                     aria-hidden="true"></i></span>
                                             <input type="date" class="form-control" name="rideDate" id="rideDate"
-                                                placeholder="YYYY/MM/DD" required/>
+                                                placeholder="YYYY/MM/DD" required />
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group ">
-                                    <button type="submit"
-                                        class="btn btn-primary btn-lg btn-block login-button">
+                                    <button type="submit" class="btn btn-primary btn-lg btn-block login-button">
                                         Create Ride
                                     </button>
-                                 </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -69,65 +68,65 @@
     </div>
 
     <h1> All Rides without a Driver</h1>
-    <table style="width:95%", bgcolor = "white", align="center">
+    <table style="width:95%" , bgcolor="white" , align="center">
         <tr>
-          <th>Pick-Up</th>
-          <th>Destination</th> 
-          <th>Start Time</th>
-          <th>Ride Date</th>
-          <th>Capacity</th>
+            <th>Pick-Up</th>
+            <th>Destination</th>
+            <th>Start Time</th>
+            <th>Ride Date</th>
+            <th>Capacity</th>
         </tr>
 
         {{#each context1}}
-        <tr name = {{rideNum}}>
-          <td>{{startLoc}}</td>
-          <td>{{dest}}</td> 
-          <td>{{startTime}}</td>
-          <td>{{rideDate}}</td>
-          <td>{{capacity}}</td>
-          <td>
-              <a href="http://localhost:3000/claimRide/{{rideNum}}">
-                  <button>Submit</button>
-              </a>
-          </td>
+        <tr name={{rideNum}}>
+            <td>{{startLoc}}</td>
+            <td>{{dest}}</td>
+            <td>{{startTime}}</td>
+            <td>{{rideDate}}</td>
+            <td>{{capacity}}</td>
+            <td>
+                <a href="http://localhost:3000/claimRide/{{rideNum}}">
+                    <button>Submit</button>
+                </a>
+            </td>
         </tr>
         {{/each}}
     </table>
 
     <h1> Driver History</h1>
-    <table style="width:95%", bgcolor = "white", align="center">
+    <table style="width:95%" , bgcolor="white" , align="center">
         <tr>
-          <th>Pick-Up</th>
-          <th>Destination</th> 
-          <th>Start Time</th>
-          <th>Ride Date</th>
+            <th>Pick-Up</th>
+            <th>Destination</th>
+            <th>Start Time</th>
+            <th>Ride Date</th>
         </tr>
 
         {{#each context2}}
         <tr>
-          <td>{{startLoc}}</td>
-          <td>{{dest}}</td> 
-          <td>{{startTime}}</td>
-          <td>{{rideDate}}</td>
+            <td>{{startLoc}}</td>
+            <td>{{dest}}</td>
+            <td>{{startTime}}</td>
+            <td>{{rideDate}}</td>
         </tr>
         {{/each}}
     </table>
 
     <h1> Riders in your Car</h1>
-    <table style="width:95%", bgcolor = "white", align="center">
+    <table style="width:95%" , bgcolor="white" , align="center">
         <tr>
-          <th>Name</th>
-          <th>E-mail</th> 
-          <th>Pick-Up Location</th>
-          <th>Destination</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Pick-Up Location</th>
+            <th>Destination</th>
         </tr>
 
         {{#each context3}}
         <tr>
-          <td>{{nameOfUser}}</td>
-          <td>{{email}}</td>
-          <td>{{startLoc}}</td>
-          <td>{{dest}}</td> 
+            <td>{{nameOfUser}}</td>
+            <td>{{email}}</td>
+            <td>{{startLoc}}</td>
+            <td>{{dest}}</td>
         </tr>
         {{/each}}
     </table>

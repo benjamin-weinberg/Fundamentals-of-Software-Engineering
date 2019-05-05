@@ -2,28 +2,29 @@
 
     <a class="navbar-brand" href="/home">BNR Ride Share</a>
 
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
-        <li class="nav-item">
-            <a class="nav-link" href="/home">Home </a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/createRide">Create Ride</a>
-        </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/createRide">Create Ride</a>
+            </li>
 
-        {{#if username}}
+            {{#if username}}
             <li class="nav-item">
                 <a class="nav-link" href="/logout" style="position: absolute; right: 10px">Hello {{username}}</a>
             </li>
-        {{else}}
+            {{else}}
             <li class="nav-item">
                 <a class="nav-link" href="/login" style="position: absolute; right: 10px">Log in/Sign Up</a>
             </li>
-        {{/if}}
-        
+            {{/if}}
+
         </ul>
     </div>
 </nav>

@@ -1,112 +1,71 @@
 <body>
-<div>
-    <a
-    type="nav-link"
-    id="backButton"
-    class="btn btn-dark"
-    href="login"
-    style="position:absolute; top:100px; left:10px"
-    >Back</a
-    >
-</div>
-<div class="container">
-    <div class="row justify-content-center">
-    <div class="col-md-8">
-        <div class="card" style="position: absloute; top: 50px;">
-        <div class="card-header">Create Ride</div>
-        <div class="card-body">
-            <form class="form-horizontal" method="post" action="#">
-            <div class="form-group">
-                <label for="name" class="cols-sm-2 control-label"
-                >Start Location</label
-                >
-                <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"
-                    ><i class="fa fa-user fa" aria-hidden="true"></i
-                    ></span>
-                    <input
-                    type="text"
-                    class="form-control"
-                    name="start"
-                    id="start"
-                    placeholder="Enter Start Location"
-                    />
-                </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="email" class="cols-sm-2 control-label"
-                >Destination</label
-                >
-                <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"
-                    ><i class="fa fa-envelope fa" aria-hidden="true"></i
-                    ></span>
-                    <input
-                    type="text"
-                    class="form-control"
-                    name="destination"
-                    id="destination"
-                    placeholder="Enter destination"
-                    />
-                </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="username" class="cols-sm-2 control-label"
-                >Start Time</label
-                >
-                <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"
-                    ><i class="fa fa-users fa" aria-hidden="true"></i
-                    ></span>
-                    <input
-                    type="time"
-                    class="form-control"
-                    name="startTime"
-                    id="startTime"
-                    placeholder="Enter start time"
-                    />
-                </div>
+    <div>
+        <a type="nav-link" id="backButton" class="btn btn-dark" href="login"
+            style="position:absolute; top:100px; left:10px">Back</a>
+    </div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card" style="position: absloute; top: 50px;">
+                    <div class="card-header">Create Ride</div>
+                    <div class="card-body">
+                        <form class="form-horizontal" method="post" action="#">
+                            <div class="form-group">
+                                <label for="name" class="cols-sm-2 control-label">Start Location</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-user fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="start" id="start"
+                                            placeholder="Enter Start Location" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="email" class="cols-sm-2 control-label">Destination</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-envelope fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="text" class="form-control" name="destination" id="destination"
+                                            placeholder="Enter destination" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="username" class="cols-sm-2 control-label">Start Time</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-users fa"
+                                                aria-hidden="true"></i></span>
+                                        <input type="time" class="form-control" name="startTime" id="startTime"
+                                            placeholder="Enter start time" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="password" class="cols-sm-2 control-label">Ride Date</label>
+                                <div class="cols-sm-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="fa fa-lock fa-lg"
+                                                aria-hidden="true"></i></span>
+                                        <input type="date" class="form-control" name="rideDate" id="rideDate"
+                                            placeholder="YYYY/MM/DD" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group ">
+                                <button type="submit" class="btn btn-primary btn-lg btn-block login-button">
+                                    Create Ride
+                                </button>
+                            </div>
+                            <div class="login-register">
+                                <a href="login">Login</a>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-            <div class="form-group">
-                <label for="password" class="cols-sm-2 control-label"
-                >Ride Date</label
-                >
-                <div class="cols-sm-10">
-                <div class="input-group">
-                    <span class="input-group-addon"
-                    ><i class="fa fa-lock fa-lg" aria-hidden="true"></i
-                    ></span>
-                    <input
-                    type="date"
-                    class="form-control"
-                    name="rideDate"
-                    id="rideDate"
-                    placeholder="YYYY/MM/DD"
-                    />
-                </div>
-                </div>
-            </div>
-            <div class="form-group ">
-                <button
-                type="submit"
-                class="btn btn-primary btn-lg btn-block login-button"
-                >
-                Create Ride
-                </button>
-            </div>
-            <div class="login-register">
-                <a href="login">Login</a>
-            </div>
-            </form>
-        </div>
         </div>
     </div>
-    </div>
-</div>
 </body>
