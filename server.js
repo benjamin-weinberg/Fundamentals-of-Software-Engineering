@@ -76,7 +76,6 @@
       res.render("login", { layout: "default", template: "login-template" });
     });
     app.post("/login", function(req, res) {
-    //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
       var sql =  "SELECT * FROM vanPool.UserList WHERE username = '" +
         req.body.username +
         "' AND userPassword = '" +
@@ -120,7 +119,6 @@
         res.send("Invalid details!");
       } else {
         var newUser;
-       // var sql = "CALL vanPool.findUsername('" + req.body.username + "');";
         var sql = "SELECT * FROM vanPool.UserList WHERE username = '" +
            req.body.username + "';";
            
@@ -138,10 +136,8 @@
               userPassword: md5(req.body.password),
               accountType: req.body.accountType
             };
-           // call vanPool.addUser('ryan', 'ryan@ryan.com', 'ryan34', 'ryan', 2);
             sql = "call vanPool.addUser('"+newUser.name+"','"+newUser.email+"','"+newUser.username+"','"+newUser.userPassword+"',"+
           newUser.accountType+");";
-            //console.log(sql);
             connection.query(sql, function(err, results) {
              if (err) console.log(err.stack);
              var sql = "SELECT * FROM vanPool.UserList WHERE username = '" +
@@ -163,12 +159,6 @@
                 res.redirect("/driver");
               }
             });
-              // req.session.user = newUser;
-              // if (newUser.accountType == 3) {
-              //   res.redirect("/rider");
-              // } else if (newUser.accountType == 2) {
-              //   res.redirect("/driver");
-              // }
             });
           }
         });
@@ -184,7 +174,6 @@
   // ***** Rider Page *****
     app.get("/rider", isAuthenticated, function(req, res) {
       var sql = "CALL vanPool.allRidesFromTodayOnward("+req.session.user.userNum+");";
-      console.log(sql);
       connection.query(sql, function(err, results1){
 
         if(err) console.log(err.stack);
@@ -311,7 +300,6 @@
       res.render("forgotPassword", { layout: "default", template: "signup-template" });
     });
     app.post("/forgotPassword", function(req, res) {
-      //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
         var sql =  "SELECT * FROM vanPool.UserList WHERE username = '" +
         req.body.username +
         "' AND email = '" +
@@ -346,7 +334,6 @@
       res.render("passwordReset", { layout: "default", template: "signup-template" });
     });
     app.post("/passwordReset", function(req, res) {
-      //"CALL vanPool.loginUser ('"+ req.body.username +"','"+ md5(req.body.password) +"');";
         var sql =  "UPDATE vanPool.UserList SET password ='" +
         md5(req.body.password) +
         "' WHERE username = '" +
@@ -368,10 +355,8 @@
 
   // ***** Claim Ride ****** 
     app.get("/claimRide/:rideNum", isAuthenticated, function(req, res) {
-      console.log(req.session.user.accountType);
       var rideNumber = req.params.rideNum;
       if (req.session.user.accountType == 2) {
-        console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
         var sql = "CALL vanPool.addDriverToRide("+req.session.user.userNum+","+rideNumber+");";
         connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
@@ -381,8 +366,6 @@
       });
       }
       else if (req.session.user.accountType == 3){
-
-        console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
         var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
         connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
