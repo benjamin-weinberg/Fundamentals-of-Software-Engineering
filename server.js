@@ -250,8 +250,6 @@
         
       };
       
-      // var sql = "CALL vanPool.addRideFromDriver ('"+newRide.startLoc+"','"+newRide.dest+"','"+newRide.startTime+"','"
-      // +newRide.rideDate+"','"+newRide.driverID+");"
       var sql ="INSERT INTO vanPool.rideList (startLoc, dest, startTime, rideDate, driverID) VALUES ('" 
       +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
       +newRide.driverID+");";
@@ -298,13 +296,12 @@
         driverID: req.session.user.userNum
       };
       
-      var sql ="INSERT INTO vanPool.rideList (startLoc, dest, startTime, rideDate, driverID) VALUES ('" 
-      +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"',"
-      +newRide.driverID+");";
+      var sql ="INSERT INTO vanPool.rideList (startLoc, dest, startTime, rideDate) VALUES ('" 
+      +newRide.startLoc +"','"+newRide.dest+"','"+newRide.startTime+"','"+newRide.rideDate+"'"+");";
       connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
         else{
-          res.redirect("/driver");
+          res.redirect("/admin");
         }
       });
     });
@@ -372,16 +369,29 @@
 
   // ***** Claim Ride ****** 
     app.get("/claimRide/:rideNum", isAuthenticated, function(req, res) {
+      console.log(req.session.user.accountType);
       var rideNumber = req.params.rideNum;
+      if (req.session.user.accountType == 2) {
+        console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
+        var sql = "CALL vanPool.addDriverToRide("+req.session.user.userNum+","+rideNumber+");";
+        connection.query(sql, function(err, results){
+        if(err) console.log(err.stack);
+        else{
+          res.redirect("/driver");
+        }
+      });
+      }
+      else if (req.session.user.accountType == 3){
 
-      console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
-      var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
-      connection.query(sql, function(err, results){
+        console.log("Ride claimed by '" + req.session.user.username + "' ride number '" + rideNumber +"'")
+        var sql = "CALL vanPool.addUserToRide("+req.session.user.userNum+","+rideNumber+");";
+        connection.query(sql, function(err, results){
         if(err) console.log(err.stack);
         else{
           res.redirect("/rider");
         }
       });
+      }
     });
 
   // ***** Default -> Home *****
